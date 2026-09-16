@@ -1,0 +1,33 @@
+openapi: 3.1.0
+info:
+  title: API de Integrações da Empresa
+  version: 1.0.0
+  description: >
+    Documentação oficial das APIs. 
+    **Regra de Negócio Geral:** Apenas usuários com perfil `Admin` podem realizar conexões.
+paths:
+  /ferramentas/conectar:
+    post:
+      summary: Conectar uma nova ferramenta
+      description: Inicia o processo de conexão de uma ferramenta externa ao sistema da companhia.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome_ferramenta:
+                  type: string
+                  example: "Jira"
+                token_acesso:
+                  type: string
+                  example: "abc-123-xyz"
+      responses:
+        '200':
+          description: Ferramenta conectada com sucesso.
+        '403':
+          description: >
+            **Acesso Negado.** Retornado em dois cenários:
+            1. O usuário não tem perfil de Admin.
+            2. A conta da empresa está bloqueada por inadimplência.
